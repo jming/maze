@@ -1,15 +1,25 @@
 
 // variables
-ROW_MAX = 24;
-COL_MAX = 24;
+var ROW_MAX = 24;
+var COL_MAX = 24;
 
-BOARDW_MAX = 500;
-BOARDH_MAX = 500;
+var BOARDW_MAX = 500;
+var BOARDH_MAX = 500;
 
-SQUARE = 20;
+var SQUARE = 20;
 
 // colors
-LINECOLOR = "grey";
+var LINECOLOR = "grey";
+
+// create board for tracking where things are
+var BOARD = [];
+for (var b = 0; b < ROW_MAX + 1; b++) {
+	BOARD.push(Array.apply(null, new Array(COL_MAX + 1)).map(Number.prototype.valueOf,0));
+}
+
+console.log(BOARD);
+BOARD[0][0] = 1;
+console.log(BOARD[0][0]);
 
 // setting up the board
 
@@ -44,15 +54,6 @@ function drawBoard () {
 
 drawBoard();
 
-function drawSquares (squares) {
-	
-	for (var i = 0; i < squares.length; i++) {
-		var coords = getCoordinates(squares[i].row, squares[i].col);
-		context.fillStyle = squares[i].color;
-		context.fillRect(coords.x, coords.y, SQUARE, SQUARE);
-	}
-}
-
 // determine blocks on the board
 
 var blocks = []
@@ -61,37 +62,72 @@ function defineBlocks (num_blocks) {
 
 	// add in some random blockers
 	for (var i = 0; i < num_blocks; i++) {
-		blocks.push({color: LINECOLOR, row: Math.floor(Math.random()*25), col: Math.floor(Math.random()*25)})
+		var row = Math.floor(Math.random()*25);
+		var col = Math.floor(Math.random()*25);
+
+			BOARD[row][col] = 1;
+		
 	}
 
 	// add the middle bunch
 	for (var i = 0; i < 7; i++) {
 		for (var j = 0; j < 7; j++) {
-			blocks.push({color: LINECOLOR, row: 9+i, col: 9+j})
+			BOARD[i + 9][j + 9] = 1;
 		}
 	}
 }
 
 defineBlocks(250);
 
-drawSquares(blocks);
-
 // determine goals on the board
 
 var goals = []
 
 function defineGoals (num_goals, colors) {
-	for (var i = 0; i < colors.length; i++) {
-		var color = colors[i];
-		for (var j = 0; j < num_goals; j++) {
-			goals.push({color: color, row: Math.floor(Math.random()*25), col: Math.floor(Math.random()*25)})
+
+	// loop through the colors
+	for (var c = 2; c < colors.length; c++) {
+
+		// add on the number of goals
+		var j = 0;
+
+		while (j < num_goals) {
+			var row = Math.floor(Math.random()*25);
+			var col = Math.floor(Math.random()*25);
+			if (BOARD[row][col] == 0) {
+				BOARD[row][col] = c;
+				j++;
+			}
 		}
 	}
+
 }
 
-defineGoals(12, ['red', 'yellow', 'green', 'blue'])
+var colors = ['none', LINECOLOR, 'red', 'yellow', 'green', 'blue']
+defineGoals(12, colors);
 
-drawSquares(goals);
+// TODO: fix the board!
+
+
+function drawSquares () {
+
+	for (var row = 0; row < ROW_MAX + 1; row++) {
+		for (var col = 0; col < COL_MAX + 1; col++) {
+
+			board_value = BOARD[col][row];
+
+			if (board_value != 0) {
+				var coords = getCoordinates(row, col);
+				context.fillStyle = colors[board_value];
+				context.fillRect(coords.x, coords.y, SQUARE, SQUARE);
+			}
+		}
+	}
+
+}
+
+drawSquares();
+
 
 // get coordinates
 
@@ -138,8 +174,7 @@ var draw = function () {
 	drawBoard();
 
 	// blocks
-	drawSquares(blocks);
-	drawSquares(goals);
+	drawSquares();
 
 	// player
 	if (playerReady) {
@@ -157,6 +192,10 @@ var draw = function () {
 
 draw();
 
+function checkIfBlocked (row, col) {
+	return (BOARD[row][col] != 1)
+}
+
 // player input
 
 addEventListener("keydown", keyDownHandler, true);
@@ -169,25 +208,25 @@ function keyDownHandler(event) {
 	switch(key) {
 		
 		case 37: // left
-			if (player.col > 0) {
+			if (player.col > 0 && checkIfBlocked(player.row, player.col - 1)) {
 				player.col -= 1;
 			}
 			break;
 		
 		case 38: // up 
-			if (player.row > 0) {
+			if (player.row > 0 && checkIfBlocked(player.row-1, player.col)) {
 				player.row -= 1;
 			}
 			break;
 		
 		case 39: // right
-			if (player.col < COL_MAX) {
+			if (player.col < COL_MAX && checkIfBlocked(player.row, player.col + 1)) {
 				player.col += 1;
 			}
 			break;
 		
 		case 40: // down
-			if (player.row < ROW_MAX) {
+			if (player.row < ROW_MAX && checkIfBlocked(player.row+1, player.col)) {
 				player.row += 1;
 			}
 			break;
