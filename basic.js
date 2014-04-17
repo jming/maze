@@ -35,19 +35,19 @@ function drawBoard () {
 	context.fillStyle = 'rgb(255,255,255)';
 	context.fillRect(0,0,520,520);
 
-	for (var x = 0; x <= BOARDW_MAX; x += SQUARE) {
-	  context.moveTo(0.5 + x + p, p);
-	  context.lineTo(0.5 + x + p, BOARDH_MAX + p);
-	}
+	// for (var x = 0; x <= BOARDW_MAX; x += SQUARE) {
+	//   context.moveTo(0.5 + x + p, p);
+	//   context.lineTo(0.5 + x + p, BOARDH_MAX + p);
+	// }
 
 
-	for (var x = 0; x <= BOARDH_MAX; x += SQUARE) {
-	  context.moveTo(p, 0.5 + x + p);
-	  context.lineTo(BOARDW_MAX + p, 0.5 + x + p);
-	}
+	// for (var x = 0; x <= BOARDH_MAX; x += SQUARE) {
+	//   context.moveTo(p, 0.5 + x + p);
+	//   context.lineTo(BOARDW_MAX + p, 0.5 + x + p);
+	// }
 
-	context.strokeStyle = LINECOLOR;
-	context.stroke();
+	// context.strokeStyle = LINECOLOR;
+	// context.stroke();
 
 	
 }
@@ -107,6 +107,16 @@ var colors = ['none', LINECOLOR, 'red', 'yellow', 'green', 'blue']
 defineGoals(12, colors);
 
 // TODO: fix the board!
+
+function fixBoard() {
+	for (var i = 0; i < 3; i++) {
+		for (var j = 0; j < 3; j++) {
+			BOARD[i][j] = 0;
+		}
+	}
+}
+
+fixBoard();
 
 
 function drawSquares () {
@@ -196,6 +206,14 @@ function checkIfBlocked (row, col) {
 	return (BOARD[row][col] != 1)
 }
 
+function reward (row, col) {
+	var board_value = BOARD[row][col];
+	if (board_value != 0) {
+		console.log('reward!');
+		BOARD[row][col] = 0;
+	}
+}
+
 // player input
 
 addEventListener("keydown", keyDownHandler, true);
@@ -234,6 +252,9 @@ function keyDownHandler(event) {
 		default:
 			break;
 	}
+
+	// check if reward square
+	reward(player.row, player.col);
 
 	draw();
 }
