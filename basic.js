@@ -17,10 +17,6 @@ for (var b = 0; b < ROW_MAX + 1; b++) {
 	BOARD.push(Array.apply(null, new Array(COL_MAX + 1)).map(Number.prototype.valueOf,0));
 }
 
-console.log(BOARD);
-BOARD[0][0] = 1;
-console.log(BOARD[0][0]);
-
 // setting up the board
 
 var p = 0;
@@ -34,21 +30,6 @@ function drawBoard () {
 
 	context.fillStyle = 'rgb(255,255,255)';
 	context.fillRect(0,0,520,520);
-
-	// for (var x = 0; x <= BOARDW_MAX; x += SQUARE) {
-	//   context.moveTo(0.5 + x + p, p);
-	//   context.lineTo(0.5 + x + p, BOARDH_MAX + p);
-	// }
-
-
-	// for (var x = 0; x <= BOARDH_MAX; x += SQUARE) {
-	//   context.moveTo(p, 0.5 + x + p);
-	//   context.lineTo(BOARDW_MAX + p, 0.5 + x + p);
-	// }
-
-	// context.strokeStyle = LINECOLOR;
-	// context.stroke();
-
 	
 }
 
@@ -200,6 +181,7 @@ var draw = function () {
 	
 }
 
+// TODO why isn't the goal being drawn till the end??
 draw();
 
 function checkIfBlocked (row, col) {
@@ -209,8 +191,10 @@ function checkIfBlocked (row, col) {
 function reward (row, col) {
 	var board_value = BOARD[row][col];
 	if (board_value != 0) {
-		console.log('reward!');
 		BOARD[row][col] = 0;
+		var color = colors[board_value];
+		var loc = $('#' + color + '_num');
+		loc.text(parseInt(loc.text()) + 1);
 	}
 }
 

@@ -5,15 +5,32 @@
   <meta charset="UTF-8" />
   <title>Exploratory Maze Game</title>
 
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="basic.css">
 </head>
 
 
 <body>
-    <canvas id="canvas" width="500px" height="500px" style="margin:20px;">
-    </canvas>
+  <canvas id="canvas" width="500px" height="500px" style="margin:20px;"></canvas>
 
-    <script src="basic.js"></script>
+  <div id='score'>
+  	<table cellpadding='10'>
+  		<tr>
+  			<td></td>
+  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg></td>
+  			<td id='red_num'>0</td>
+  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg></td>
+  			<td id='yellow_num'>0</td>
+  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg></td>
+  			<td id='green_num'>0</td>
+  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg></td>
+  			<td id='blue_num'>0</td>
+  		</tr>
+  	</table>
+  </div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="basic.js"></script>
 </body>
 </html>
 
