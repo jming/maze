@@ -7,29 +7,68 @@
 
   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="basic.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 </head>
 
 
 <body>
-  <canvas id="canvas" width="500px" height="500px" style="margin:20px;"></canvas>
 
-  <div id='score'>
-  	<table cellpadding='10'>
-  		<tr>
-  			<td></td>
-  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg></td>
-  			<td id='red_num'>0</td>
-  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg></td>
-  			<td id='yellow_num'>0</td>
-  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg></td>
-  			<td id='green_num'>0</td>
-  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg></td>
-  			<td id='blue_num'>0</td>
-  		</tr>
-  	</table>
-  </div>
+	<table cellpadding='20'>
+		<tr>
+			<td>
 
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+				<canvas id="canvas" width="500px" height="500px" style="margin:20px;"></canvas>
+
+			  <div id='score'>
+			  	<table cellpadding='10'>
+			  		<tr>
+			  			<td></td>
+			  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg></td>
+			  			<td id='red_num'>0</td>
+			  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg></td>
+			  			<td id='yellow_num'>0</td>
+			  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg></td>
+			  			<td id='green_num'>0</td>
+			  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg></td>
+			  			<td id='blue_num'>0</td>
+			  			<td>Number of steps:</td>
+			  			<td id='num_steps'>0</td>
+			  		</tr>
+			  	</table>
+			  </div>
+
+			</td>
+
+			<td>
+
+				<div id='instructions' style='display:none;'>
+
+					<h2>Welcome to the exploratory maze game!</h2>
+
+					In this game, your goal is to reach the middle of the maze in less than 100 steps.<br /><br />
+
+					You must accumulate specific sequences of colored blocks in order to open up space in the center grey square. The sequences will be based on the following combinations:
+
+						<ul>
+							<li>Four of the same color square, for example:
+							</li>
+							<li>Pairs of the same color squares, for example: </li>
+							<li>??</li>
+						</ul>
+
+					By clicking "Begin game" you are consenting to being part of this study and allowing your moves to be analyzed.
+
+				</div>
+
+			</td>
+
+		</tr>
+	</table>
+
+  
+
+  
   <script src="basic.js"></script>
 </body>
 </html>
