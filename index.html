@@ -9,10 +9,51 @@
   <link rel="stylesheet" href="basic.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+  <script>
+
+	  $(function() {
+	   
+	    $( "#consent" ).dialog({ 
+	    	dialogClass: 'no-close',
+	    	minHeight: 660,
+	    	minWidth: 1200,
+	    	modal: true,
+	    	closeText: 'x',
+	    });
+
+	    $('#begin-button').click(function () {
+	    	$('#consent').dialog('close');
+	    });
+
+	    if (!IS_EXPERT) {
+	    	$('.expert').hide();
+	    }
+
+	  });
+  </script>
 </head>
 
 
 <body>
+
+	<div id='consent' style='background:white; height:500px; width:700px; padding:50px;'>
+
+		<h2>Experimental consent</h2>
+
+		<h3>STUDY DESCRIPTION</h3>
+
+		<h3>PARTICIPANT SELECTION</h3>
+
+		<h3>PARTICIPANT COMPENSATION</h3>
+
+		<h3>PARTICIPANT CONSENT</h3>
+
+		<p>I understand the risks presented by this study and by clicking on the button below, I am consenting to this experiment.</p>
+
+		<button id='begin-button'>Begin game >></button>
+
+	</div>
 
 	<table cellpadding='20'>
 		<tr>
@@ -42,22 +83,57 @@
 
 			<td>
 
-				<div id='instructions' style='display:none;'>
+				<div id='instructions'>
 
 					<h2>Welcome to the exploratory maze game!</h2>
 
-					In this game, your goal is to reach the middle of the maze in less than 100 steps.<br /><br />
+					<p>Your goal is to reach the middle of the maze in less than 150 steps.</p>
 
-					You must accumulate specific sequences of colored blocks in order to open up space in the center grey square. The sequences will be based on the following combinations:
+					<p>There is a wall around the middle of the maze. Each of the combinations below will break down a different section of the wall.</p>
 
-						<ul>
-							<li>Four of the same color square, for example:
-							</li>
-							<li>Pairs of the same color squares, for example: </li>
-							<li>??</li>
-						</ul>
+					<p class='expert'>The labels for the combinations correspond with the labels on the wall.</p>
 
-					By clicking "Begin game" you are consenting to being part of this study and allowing your moves to be analyzed.
+					<p id='pattern_a'>
+						<span class='expert'>A </span>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
+					</p>
+
+					<p id='pattern_b'>
+						<span class='expert'>B </span>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+					</p>
+
+					<p id='pattern_c'>
+						<span class='expert'>C </span>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg>
+					</p>
+
+					<p id='pattern_d'>
+						<span class='expert'>D </span>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
+					</p>
+
+					<p id='pattern_e'>
+						<span class='expert'>E </span>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
+						<svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
+					</p>
+
+					Good luck! May the odds be ever in your favor.
 
 				</div>
 

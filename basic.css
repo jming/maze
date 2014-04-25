@@ -1,3 +1,13 @@
 * {
 	font-family: 'Open Sans', sans-serif;
 }
+
+button {
+	border: none;
+	padding: 10px;
+	font-size: 16px;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
