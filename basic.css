@@ -11,3 +11,12 @@ button {
 .no-close .ui-dialog-titlebar-close {
   display: none;
 }
+
+.consent-text {
+	font-size: 12px;
+}
+
+h4 {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}

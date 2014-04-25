@@ -16,8 +16,8 @@
 	   
 	    $( "#consent" ).dialog({ 
 	    	dialogClass: 'no-close',
-	    	minHeight: 660,
-	    	minWidth: 1200,
+	    	minHeight: 670,
+	    	minWidth: 1300,
 	    	modal: true,
 	    	closeText: 'x',
 	    });
@@ -37,21 +37,33 @@
 
 <body>
 
-	<div id='consent' style='background:white; height:500px; width:700px; padding:50px;'>
+	<div id='consent' style='background:white;padding:50px;padding-top:5px'>
 
-		<h2>Experimental consent</h2>
+		<h2>The Exploratory Maze Game</h2>
 
-		<h3>STUDY DESCRIPTION</h3>
+		<h4>PARTICIPATION IS VOLUNTARY</h4>
+		<p class='consent-text'>It is your choice whether or not to participate in this research. If you choose to participate, you may change your mind and leave the study at any time.</p>
 
-		<h3>PARTICIPANT SELECTION</h3>
+		<h4>DESCRIPTION OF THE PROPOSED STUDY</h4>
+		<p class='consent-text'>You will be asked to participate in an online maze game, which will take approximately five minutes. In this game, you will be navigating a maze and picking up colored squares that will enable you to reach the goal (the center of the maze). Please read the rules on the screen before starting the game, and if anything is unclear about the rules, you may ask before starting the game. After playing the game, you may ask questions about the purpose of the game and the research goals.</p>
 
-		<h3>PARTICIPANT COMPENSATION</h3>
+		<h4>POTENTIAL RISKS AND DISCOMFORTS</h4>
+		<p class='consent-text'>There is minimal risk that you may experience eye strain or other discomforts related to playing a game on a computer screen, but since the duration of the game is short, the probability of experiencing any discomfort is very low. We will be logging data based on your movements and actions during the game, but the data will not be linked to any identifiable information about yourself.</p>
 
-		<h3>PARTICIPANT CONSENT</h3>
+		<h4>POTENTIAL BENEFITS</h4>
+		<p class='consent-text'>There are no special benefits you should expect from participating in the study; however, we hope you will find the experience engaging and enjoyable. The data gained from this study will help advance research in plan recognition (in the context of artificial intelligence).</p>
 
-		<p>I understand the risks presented by this study and by clicking on the button below, I am consenting to this experiment.</p>
+		<h4>COMPENSATION</h4>
+		<p class='consent-text'>You will not be compensated in any monetary form for participating in this research.</p>
 
-		<button id='begin-button'>Begin game >></button>
+		<h4>QUESTIONS?</h4>
+		<p class='consent-text'> Contact Joy Ming (jming@college.harvard.edu) or Victoria Gu (vgu@college.harvard.edu).
+
+		<h4>PARTICIPANT CONSENT</h4>
+
+		<p class='consent-text'>I understand the risks presented by this study and by clicking on the button below, I am consenting to this experiment.</p>
+
+		<button id='begin-button'>I CONSENT >></button>
 
 	</div>
 
