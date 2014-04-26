@@ -387,7 +387,7 @@ function addAction (key) {
 	actions.push(key);
 
 	var loc = $('#num_steps');
-	loc.text(parseInt(loc.text(), 10) + 1);
+	loc.text(parseInt(loc.text(), 10) - 1);
 
 	// make sure not too many actions
 	if (actions.length == MAX_ACTIONS) {
@@ -450,7 +450,9 @@ function keyDownHandler(event) {
 	}
 
 	// log the action
-	addAction(key);
+	if (!checkIfBlocked(player.row, player.col)) {
+		addAction(key);
+	}
 
 	// check if reward square
 	checkIfGoal(player.row, player.col);
