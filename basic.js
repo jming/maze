@@ -155,14 +155,17 @@ function drawSquares () {
 drawSquares();
 
 function drawHints(is_expert) {
+
 	if (is_expert) {
+		
 		for (var p = 0; p < patterns.length; p++) {
 
-			if (pattern_order.indexOf(p) < -1) {
+			if (pattern_order.indexOf(p) >= -1) {
 				var pattern = PATTERNS_CAPS[p];
 
 				for (var i = 0; i < pattern.length; i++) {
 					var coords = pattern[i];
+
 					if (BOARD[coords[0]][coords[1]] == 1) {
 						// render the letter on the square
 						var letter = patterns[p].slice(-1).toUpperCase();
@@ -225,6 +228,7 @@ var draw = function () {
 	drawSquares();
 
 	drawHints(IS_EXPERT);
+	// console.log(IS_EXPERT);
 
 	// player
 	if (playerReady) {
