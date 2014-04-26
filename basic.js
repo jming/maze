@@ -1,3 +1,29 @@
+// event handlers
+
+$( "#consent" ).dialog({
+	dialogClass: 'no-close',
+	minHeight: 670,
+	minWidth: 1300,
+	modal: true,
+	closeText: 'x',
+});
+
+$('#expert-button').click(function () {
+
+	$('#consent').dialog('close');
+	IS_EXPERT = true;
+	draw();
+});
+
+$('#nonexpert-button').click(function() {
+
+	$('.expert').hide();
+
+	$('#consent').dialog('close');
+	IS_EXPERT = false;
+	draw();
+});
+
 var IS_EXPERT = true;
 
 
@@ -42,7 +68,7 @@ BOARD = [
 	[0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1],
 	[1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0],
 	[0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
-]
+];
 
 PATTERN_A = [[9,13], [10,10], [11,11], [11,12], [12,13], [13,9], [13,15], [14, 12], [15,9], [15, 11], [15, 15]];
 PATTERN_B = [[9,15], [10,11], [10,12], [10,14], [12,11], [13,11], [13,13], [14,15], [15,10], [15,14]];
@@ -50,16 +76,18 @@ PATTERN_C = [[9,10], [9,12], [10,9], [10,13], [10,15], [11,9], [12,15], [13,12],
 PATTERN_D = [[9,9], [9,14], [11,10], [11,14], [11,15], [12,9], [13,10], [13,14], [14,9], [15,12]];
 PATTERN_E = [[9,11], [11,13], [12,10], [12,14], [14,11], [15,13]];
 
-var goals = []
-var colors = ['none', LINECOLOR, 'red', 'yellow', 'green', 'blue']
+var goals = [];
+var colors = ['none', LINECOLOR, 'red', 'yellow', 'green', 'blue'];
 var colors_distr = [0, 0, 14, 6, 6, 10];
-var actions = []
+var actions = [];
 var actions_categories = Array.apply(null, new Array(colors.length)).map(Number.prototype.valueOf, 0);
-var goal_order = []
+var goal_order = [];
 
 var pattern_order = [];
+var pattern_appear = [];
 var patterns = ['pattern_a', 'pattern_b', 'pattern_c', 'pattern_d', 'pattern_e'];
 var PATTERNS_CAPS = [PATTERN_A, PATTERN_B, PATTERN_C, PATTERN_D, PATTERN_E];
+var pattern_tiles = [[2, 3, 4, 5], [2, 2, 2, 2], [2, 2, 3, 3], [4, 4, 5, 5], [2, 2, 5, 5]];
 
 // create board for tracking where things are
 
@@ -95,7 +123,7 @@ function defineGoals (colors) {
 		while (j < colors_distr[c]) {
 			var row = Math.floor(Math.random()*25);
 			var col = Math.floor(Math.random()*25);
-			if (BOARD[row][col] == 0 && row != 12 && col != 12 && row != 0 && col != 0) {
+			if (BOARD[row][col] === 0 && row !== 12 && col !== 12 && row !== 0 && col !== 0) {
 				BOARD[row][col] = c;
 				j++;
 			}
@@ -114,7 +142,7 @@ function drawSquares () {
 
 			board_value = BOARD[col][row];
 
-			if (board_value != 0) {
+			if (board_value !== 0) {
 				var coords = getCoordinates(row, col);
 				context.fillStyle = colors[board_value];
 				context.fillRect(coords.x, coords.y, SQUARE, SQUARE);
@@ -130,7 +158,7 @@ function drawHints(is_expert) {
 	if (is_expert) {
 		for (var p = 0; p < patterns.length; p++) {
 
-			if (!(pattern_order.indexOf(p) > -1)) {
+			if (pattern_order.indexOf(p) < -1) {
 				var pattern = PATTERNS_CAPS[p];
 
 				for (var i = 0; i < pattern.length; i++) {
@@ -167,26 +195,26 @@ var playerReady = false;
 var playerImage = new Image();
 playerImage.onload = function() {
 	playerReady = true;
-}
-playerImage.src = 'player.png'
+};
+playerImage.src = 'player.png';
 
 var goalReady = false;
 var goalImage = new Image();
 goalImage.onload = function () {
 	goalReady = true;
-}
-goalImage.src = 'goal.png'
+};
+goalImage.src = 'goal.png';
 
 // game objects
 var player = {
 	row: 0,
 	col: 0
-}
+};
 
 var goal = {
 	row: ROW_MAX / 2,
 	col: COL_MAX /2
-}
+};
 
 // Draw everything
 var draw = function () {
@@ -206,17 +234,17 @@ var draw = function () {
 	
 	// goals
 	if (goalReady) {
-		var coords = getCoordinates(goal.row, goal.col);
-		context.drawImage(goalImage, coords.y, coords.x);
+		var coord = getCoordinates(goal.row, goal.col);
+		context.drawImage(goalImage, coord.y, coord.x);
 	}
 	
-}
+};
 
 // TODO why isn't the goal being drawn till the end??
 draw();
 
 function checkIfBlocked (row, col) {
-	return (BOARD[row][col] != 1)
+	return (BOARD[row][col] != 1);
 }
 
 function checkIfGoal (row, col) {
@@ -232,13 +260,13 @@ function checkIfGoal (row, col) {
 	// check if colored square
 	var board_value = BOARD[row][col];
 
-	if (board_value != 0) {
+	if (board_value !== 0) {
 
 		// update the score
 		BOARD[row][col] = 0;
 		var color = colors[board_value];
 		var loc = $('#' + color + '_num');
-		loc.text(parseInt(loc.text()) + 1);
+		loc.text(parseInt(loc.text(), 10) + 1);
 
 		// log the goal_order
 		goal_order.push(board_value);
@@ -253,9 +281,9 @@ function checkIfGoal (row, col) {
 
 function checkPatterns() {
 
-	var pattern = null;
-	var tiles = [];
-	var pattern_num = null;
+	var pattern_nums = [];
+	// var tiles = [];
+	// var pattern_num = null;
 
 	// var colors = ['none', LINECOLOR, 'red', 'yellow', 'green', 'blue']
 
@@ -264,80 +292,93 @@ function checkPatterns() {
 		&& actions_categories[3] > 0 
 		&& actions_categories[4] > 0 
 		&& actions_categories[5] > 0) {
-		pattern = PATTERN_A;
-		tiles = [2, 3, 4, 5];
-		pattern_num = 0; 
+		// pattern = PATTERN_A;
+		// tiles = ;
+		pattern_nums.push(0); 
 	}
 
 	// 4 of 2
 	if (actions_categories[2] > 3) {
-		pattern = PATTERN_B;
-		tiles = [2, 2, 2, 2];
-		pattern_num = 1;
+		// pattern = PATTERN_B;
+		// tiles = ;
+		pattern_nums.push(1);
 	}
 
 	if (actions_categories[2] > 1 
 		&& actions_categories[3] > 1) {
-		pattern = PATTERN_C;
-		tiles = [2, 2, 3, 3];
-		pattern_num = 2;
+		// pattern = PATTERN_C;
+		// tiles = ;
+		pattern_nums.push(2);
 	}
 
 	if (actions_categories[4] > 1
 		&& actions_categories[5] > 1) {
-		pattern = PATTERN_D;
-		tiles = [4, 4, 5, 5];
-		pattern_num = 3; 
+		// pattern = PATTERN_D;
+		// tiles = ;
+		pattern_nums.push(3); 
 	}
 
 	if (actions_categories[5] > 1
 		&& actions_categories[2] > 1) {
-		pattern = PATTERN_E;
-		tiles = [2, 2, 5, 5];
-		pattern_num = 4;
+		// pattern = PATTERN_E;
+		// tiles = ;
+		pattern_nums.push(4);
 	}
 	
 
-	if (pattern 
-		&& tiles.length > 0 
-		&& !(pattern_order.indexOf(pattern_num) > -1)) {
+	for (var p = 0; p < pattern_nums.length; p++) {
 
-		alert('You have attained a combination!');
-		$( "#pattern" ).dialog();
+		var pattern_num = pattern_nums[p];
 
-		// console.log('pattern', pattern);
+		if (!(pattern_order.indexOf(pattern_num) > -1)
+		&& !(pattern_appear.indexOf(pattern_num) > -1)) {
 
-		// track that a pattern has been used
-		pattern_order.push(pattern_num);
-		
-		// color in the pattern used
-		$('#' + patterns[pattern_num]).append('<b>X</b>');
-		// var rects = $('#' + patterns[pattern_num] + ' svg rect');
-		// for (var h = 0; h < rects.length; h++) {
-		// 	rects[h].style.fill = LINECOLOR;
-		// }
+			alert('You have attained a combination!');
 
-		// fix blocks in patterns
-		for (var i = 0; i < pattern.length; i++) {
-			var elt = pattern[i];
-			BOARD[elt[0]][elt[1]] = 0;
+			// show use pattern button
+			$('#' + patterns[pattern_num]).append(
+				"<button class='pattern-button' onclick='usePattern("
+				+ pattern_num +")' id='"+ pattern_num +"'>use</button>"
+			);
+
+			pattern_appear.push(pattern_num);
 		}
 
-		// fix number of colored tiles
-		for (var j = 0; j < tiles.length; j++) {
-			var color = colors[tiles[j]];
-
-			// display
-			var loc = $('#' + color + '_num');
-			loc.text(parseInt(loc.text()) - 1);
-
-			// stored value
-			actions_categories[tiles[j]] -= 1;
-		}
 	}
-	
-	
 
+}
+
+function usePattern (pattern_num) {
+
+	var pattern = PATTERNS_CAPS[pattern_num];
+	var tiles = pattern_tiles[pattern_num];
+
+	// track that a pattern has been used
+	pattern_order.push(pattern_num);
+	
+	// color in the pattern used
+	$('#' + pattern_num).remove();
+	$('#' + patterns[pattern_num]).append('<b>X</b>');
+
+	// fix blocks in patterns
+	for (var i = 0; i < pattern.length; i++) {
+		var elt = pattern[i];
+		BOARD[elt[0]][elt[1]] = 0;
+	}
+
+	// fix number of colored tiles
+	for (var j = 0; j < tiles.length; j++) {
+		var color = colors[tiles[j]];
+
+		// display
+		var loc = $('#' + color + '_num');
+		loc.text(parseInt(loc.text(), 10) - 1);
+
+		// stored value
+		actions_categories[tiles[j]] -= 1;
+	}
+
+	draw();
 }
 
 function addAction (key) {
@@ -346,7 +387,7 @@ function addAction (key) {
 	actions.push(key);
 
 	var loc = $('#num_steps');
-	loc.text(parseInt(loc.text()) + 1);
+	loc.text(parseInt(loc.text(), 10) + 1);
 
 	// make sure not too many actions
 	if (actions.length == MAX_ACTIONS) {
@@ -365,7 +406,7 @@ function endGame () {
 	// print actions
 	console.log('actions', actions);
 	console.log('goal_order', goal_order);
-	console.log('patterns', pattern_order);
+	console.log('pattern_order', pattern_order);
 
 }
 
@@ -417,13 +458,3 @@ function keyDownHandler(event) {
 	draw();
 
 }
-
-// reset game
-var reset = function () {
-	player.row = 0;
-	player.col = 0;
-}
-
-// update game objects
-
-

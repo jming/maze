@@ -12,156 +12,136 @@
 
   <script>
 
-	  $(function() {
-	   
-	    $( "#consent" ).dialog({ 
-	    	dialogClass: 'no-close',
-	    	minHeight: 670,
-	    	minWidth: 1300,
-	    	modal: true,
-	    	closeText: 'x',
-	    });
+    // $(function() {
+      
+    // });
+      
 
-	    $('#expert-button').click(function () {
-	    	$('#consent').dialog('close');
-	    	IS_EXPERT = true;
-	    	draw();
-	    });
-
-	    $('#nonexpert-button').click(function() {
-	    	$('.expert').hide();
-	    	// drawHints(false);
-	    	draw();	    	
-	    	$('#consent').dialog('close');
-	    	IS_EXPERT = false;
-
-	    });
-
-	  });
   </script>
+
 </head>
 
 
 <body>
 
-	<div id='consent' style='background:white;padding:50px;padding-top:5px'>
+  <div id='consent' style='background:white;padding:50px;padding-top:5px'>
 
-		<h2>The Exploratory Maze Game</h2>
+    <h2>The Exploratory Maze Game</h2>
 
-		<h4>Participation is voluntary.</h4>
-		<p class='consent-text'>It is your choice whether or not to participate in this research. If you choose to participate, you may change your mind and leave the study at any time.</p>
+    <h4>Participation is voluntary.</h4>
+    <p class='consent-text'>It is your choice whether or not to participate in this research. If you choose to participate, you may change your mind and leave the study at any time.</p>
 
-		<h4>Description of the proposed study.</h4>
-		<p class='consent-text'>You will be asked to participate in an online maze game, which will take approximately five minutes. In this game, you will be navigating a maze and picking up colored squares that will enable you to reach the goal (the center of the maze). Please read the rules on the screen before starting the game, and if anything is unclear about the rules, you may ask before starting the game. After playing the game, you may ask questions about the purpose of the game and the research goals.</p>
+    <h4>Description of the proposed study.</h4>
+    <p class='consent-text'>You will be asked to participate in an online maze game, which will take approximately five minutes. In this game, you will be navigating a maze and picking up colored squares that will enable you to reach the goal (the center of the maze). Please read the rules on the screen before starting the game, and if anything is unclear about the rules, you may ask before starting the game. After playing the game, you may ask questions about the purpose of the game and the research goals.</p>
 
-		<h4>Potential risks and discomforts.</h4>
-		<p class='consent-text'>There is minimal risk that you may experience eye strain or other discomforts related to playing a game on a computer screen, but since the duration of the game is short, the probability of experiencing any discomfort is very low. We will be logging data based on your movements and actions during the game, but the data will not be linked to any identifiable information about yourself.</p>
+    <h4>Potential risks and discomforts.</h4>
+    <p class='consent-text'>There is minimal risk that you may experience eye strain or other discomforts related to playing a game on a computer screen, but since the duration of the game is short, the probability of experiencing any discomfort is very low. We will be logging data based on your movements and actions during the game, but the data will not be linked to any identifiable information about yourself.</p>
 
-		<h4>Potential benefits.</h4>
-		<p class='consent-text'>There are no special benefits you should expect from participating in the study; however, we hope you will find the experience engaging and enjoyable. The data gained from this study will help advance research in plan recognition (in the context of artificial intelligence).</p>
+    <h4>Potential benefits.</h4>
+    <p class='consent-text'>There are no special benefits you should expect from participating in the study; however, we hope you will find the experience engaging and enjoyable. The data gained from this study will help advance research in plan recognition (in the context of artificial intelligence).</p>
 
-		<h4>Compensation.</h4>
-		<p class='consent-text'>You will not be compensated in any monetary form for participating in this research.</p>
+    <h4>Compensation.</h4>
+    <p class='consent-text'>You will not be compensated in any monetary form for participating in this research.</p>
 
-		<h4>Questions?</h4>
-		<p class='consent-text'> Contact Joy Ming (jming@college.harvard.edu) or Victoria Gu (vgu@college.harvard.edu).
+    <h4>Questions?</h4>
+    <p class='consent-text'> Contact Joy Ming (jming@college.harvard.edu) or Victoria Gu (vgu@college.harvard.edu).
 
-		<h4>Participant consent.</h4>
+    <h4>Participant consent.</h4>
 
-		<p class='consent-text'>I understand the risks presented by this study and by clicking on the button below, I am consenting to this experiment.</p>
+    <p class='consent-text'>I understand the risks presented by this study and by clicking on the button below, I am consenting to this experiment.</p>
 
-		<!-- <button id='begin-button'>I CONSENT >></button> -->
-		<button id='expert-button'>EXPERIMENTAL CONDITION 1</button>
-		<button id='nonexpert-button'>EXPERIMENTAL CONDITION 2</button>
+    <!-- <button id='begin-button'>I CONSENT >></button> -->
+    <button id='expert-button'>EXPERIMENTAL CONDITION 1</button>
+    <button id='nonexpert-button'>EXPERIMENTAL CONDITION 2</button>
 
-	</div>
+  </div>
 
-	<table cellpadding='20'>
-		<tr>
-			<td>
+  <table cellpadding='20'>
+    <tr>
+      <td>
 
-				<canvas id="canvas" width="500px" height="500px" style="margin:20px;"></canvas>
+        <canvas id="canvas" width="500px" height="500px" style="margin:20px;"></canvas>
 
-			  <div id='score'>
-			  	<table cellpadding='10'>
-			  		<tr>
-			  			<td></td>
-			  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg></td>
-			  			<td id='red_num'>0</td>
-			  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg></td>
-			  			<td id='yellow_num'>0</td>
-			  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg></td>
-			  			<td id='green_num'>0</td>
-			  			<td><svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg></td>
-			  			<td id='blue_num'>0</td>
-			  			<td>Number of steps:</td>
-			  			<td id='num_steps'>0</td>
-			  		</tr>
-			  	</table>
-			  </div>
+        <div id='score'>
+          <table cellpadding='10'>
+            <tr>
+              <td></td>
+              <td><svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg></td>
+              <td id='red_num'>0</td>
+              <td><svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg></td>
+              <td id='yellow_num'>0</td>
+              <td><svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg></td>
+              <td id='green_num'>0</td>
+              <td><svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg></td>
+              <td id='blue_num'>0</td>
+              <td>Number of steps:</td>
+              <td id='num_steps'>0</td>
+            </tr>
+          </table>
+        </div>
 
-			</td>
+      </td>
 
-			<td>
+      <td>
 
-				<div id='instructions'>
+        <div id='instructions'>
 
-					<h2>Welcome to the exploratory maze game!</h2>
+          <h2>Welcome to the exploratory maze game!</h2>
 
-					<p>Your goal is to reach the middle of the maze in less than 150 steps. You can move using the left, right, down, and up arrow keys.</p>
+          <p>Your goal is to reach the middle of the maze in less than 150 steps. You can move using the left, right, down, and up arrow keys.</p>
 
-					<p>There is a wall around the middle of the maze. Once you collected enough tiles <br>(<b>in any order</b>) to match one of the sets below, you will be able to break down a different section of the wall.</p>
+          <p>There is a wall around the middle of the maze. Once you collected enough tiles <br>(<b>in any order</b>) to match one of the sets below, you will be able to break down a different section of the wall.</p>
 
-					<p class='expert'>The labels for the combinations correspond with the labels on the wall. When you attain the set, you will be able to break down all of the blocks with the label.</p>
+          <p class='expert'>The labels for the combinations correspond with the labels on the wall. When you attain the set, you will be able to break down all of the blocks with the label.</p>
 
-					<p id='pattern_a'>
-						<span class='expert'><b>A </b></span>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
-					</p>
+          <p id='pattern_a'>
+            <span class='expert'><b>A </b></span>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
+          </p>
 
-					<p id='pattern_b'>
-						<span class='expert'><b>B </b></span>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
-					</p>
+          <p id='pattern_b'>
+            <span class='expert'><b>B </b></span>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+          </p>
 
-					<p id='pattern_c'>
-						<span class='expert'><b>C </b></span>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg>
-					</p>
+          <p id='pattern_c'>
+            <span class='expert'><b>C </b></span>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg>
+          </p>
 
-					<p id='pattern_d'>
-						<span class='expert'><b>D </b></span>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
-					</p>
+          <p id='pattern_d'>
+            <span class='expert'><b>D </b></span>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
+          </p>
 
-					<p id='pattern_e'>
-						<span class='expert'><b>E </b></span>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
-						<svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
-					</p>
+          <p id='pattern_e'>
+            <span class='expert'><b>E </b></span>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
+            <svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg>
+          </p>
 
-					Good luck! May the odds be ever in your favor.
+          Good luck! May the odds be ever in your favor.
 
-				</div>
+        </div>
 
-			</td>
+      </td>
 
-		</tr>
-	</table>
+    </tr>
+  </table>
 
   
 
