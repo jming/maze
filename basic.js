@@ -345,8 +345,6 @@ function addAction (key) {
 	// add to tracking actions
 	actions.push(key);
 
-	console.log(actions_categories);
-
 	var loc = $('#num_steps');
 	loc.text(parseInt(loc.text()) + 1);
 
