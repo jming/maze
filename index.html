@@ -22,13 +22,18 @@
 	    	closeText: 'x',
 	    });
 
-	    $('#begin-button').click(function () {
+	    $('#expert-button').click(function () {
 	    	$('#consent').dialog('close');
+	    	IS_EXPERT = true;
 	    });
 
-	    if (!IS_EXPERT) {
+	    $('#nonexpert-button').click(function() {
 	    	$('.expert').hide();
-	    }
+	    	drawHints(false);
+	    	$('#consent').dialog('close');
+	    	IS_EXPERT = false;
+
+	    });
 
 	  });
   </script>
@@ -63,7 +68,9 @@
 
 		<p class='consent-text'>I understand the risks presented by this study and by clicking on the button below, I am consenting to this experiment.</p>
 
-		<button id='begin-button'>I CONSENT >></button>
+		<!-- <button id='begin-button'>I CONSENT >></button> -->
+		<button id='expert-button'>EXPERIMENTAL CONDITION 1</button>
+		<button id='nonexpert-button'>EXPERIMENTAL CONDITION 2</button>
 
 	</div>
 

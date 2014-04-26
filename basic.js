@@ -126,7 +126,7 @@ function drawSquares () {
 
 drawSquares();
 
-function drawHints() {
+function drawHints(IS_EXPERT) {
 	if (IS_EXPERT) {
 		for (var p = 0; p < patterns.length; p++) {
 
