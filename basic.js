@@ -126,8 +126,8 @@ function drawSquares () {
 
 drawSquares();
 
-function drawHints(IS_EXPERT) {
-	if (IS_EXPERT) {
+function drawHints(is_expert) {
+	if (is_expert) {
 		for (var p = 0; p < patterns.length; p++) {
 
 			if (!(pattern_order.indexOf(p) > -1)) {
@@ -196,7 +196,7 @@ var draw = function () {
 	// blocks
 	drawSquares();
 
-	drawHints();
+	drawHints(IS_EXPERT);
 
 	// player
 	if (playerReady) {

@@ -25,11 +25,13 @@
 	    $('#expert-button').click(function () {
 	    	$('#consent').dialog('close');
 	    	IS_EXPERT = true;
+	    	draw();
 	    });
 
 	    $('#nonexpert-button').click(function() {
 	    	$('.expert').hide();
-	    	drawHints(false);
+	    	// drawHints(false);
+	    	draw();	    	
 	    	$('#consent').dialog('close');
 	    	IS_EXPERT = false;
 
@@ -106,11 +108,11 @@
 
 					<h2>Welcome to the exploratory maze game!</h2>
 
-					<p>Your goal is to reach the middle of the maze in less than 150 steps.</p>
+					<p>Your goal is to reach the middle of the maze in less than 150 steps. You can move using the left, right, down, and up arrow keys.</p>
 
-					<p>There is a wall around the middle of the maze. Each of the combinations below will break down a different section of the wall.</p>
+					<p>There is a wall around the middle of the maze. Once you collected enough tiles (in any order) to match one of the sets below, you will be able to break down a different section of the wall.</p>
 
-					<p class='expert'>The labels for the combinations correspond with the labels on the wall.</p>
+					<p class='expert'>The labels for the combinations correspond with the labels on the wall. When you attain the set, you will be able to break down all of the blocks with the label.</p>
 
 					<p id='pattern_a'>
 						<span class='expert'>A </span>
