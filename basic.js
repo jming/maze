@@ -333,8 +333,6 @@ function checkPatterns() {
 		if (!(pattern_order.indexOf(pattern_num) > -1)
 		&& !(pattern_appear.indexOf(pattern_num) > -1)) {
 
-			alert('You have attained a combination!');
-
 			// show use pattern button
 			$('#' + patterns[pattern_num]).append(
 				"<button class='pattern-button' onclick='usePattern("
@@ -378,6 +376,12 @@ function usePattern (pattern_num) {
 		actions_categories[tiles[j]] -= 1;
 	}
 
+	// remove all "use" buttons
+
+	$('.pattern-button').remove();
+	pattern_appear = [];
+	checkPatterns();
+
 	draw();
 }
 
@@ -416,6 +420,7 @@ addEventListener("keydown", keyDownHandler, true);
 
 function keyDownHandler(event) {
 	var key = event.which;
+	var moved = false;
 
 	if (key > 46) { return; }
 
@@ -424,24 +429,28 @@ function keyDownHandler(event) {
 		case 37: // left
 			if (player.col > 0 && checkIfBlocked(player.row, player.col - 1)) {
 				player.col -= 1;
+				moved = true;
 			}
 			break;
 		
 		case 38: // up 
 			if (player.row > 0 && checkIfBlocked(player.row-1, player.col)) {
 				player.row -= 1;
+				moved = true;
 			}
 			break;
 		
 		case 39: // right
 			if (player.col < COL_MAX && checkIfBlocked(player.row, player.col + 1)) {
 				player.col += 1;
+				moved = true;
 			}
 			break;
 		
 		case 40: // down
 			if (player.row < ROW_MAX && checkIfBlocked(player.row+1, player.col)) {
 				player.row += 1;
+				moved = true;
 			}
 			break;
 		
@@ -450,13 +459,12 @@ function keyDownHandler(event) {
 	}
 
 	// log the action
-	if (!checkIfBlocked(player.row, player.col)) {
+	if (moved) {
+
 		addAction(key);
+		checkIfGoal(player.row, player.col);
+		draw();
+
 	}
-
-	// check if reward square
-	checkIfGoal(player.row, player.col);
-
-	draw();
 
 }
