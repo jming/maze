@@ -37,7 +37,7 @@ var BOARDH_MAX = 500;
 var SQUARE = 20;
 
 // var NUM_GOALS = 12;
-var MAX_ACTIONS =150;
+var MAX_ACTIONS = 250;
 
 // colors
 var LINECOLOR = "grey";
@@ -82,6 +82,7 @@ var colors_distr = [0, 0, 14, 6, 6, 10];
 var actions = [];
 var actions_categories = Array.apply(null, new Array(colors.length)).map(Number.prototype.valueOf, 0);
 var goal_order = [];
+var goal_unused = [];
 
 var pattern_order = [];
 var pattern_appear = [];
@@ -131,6 +132,30 @@ function defineGoals (colors) {
 	}
 
 }
+
+// function defineGoals (colors) {
+
+// 	// create an array of goals based on distribution
+// 	var goals = [];
+
+// 	for (var c = 2; c < colors.length; c++) {
+// 		for (var d = 0; d < colors_distr[c]; d++) {
+// 			goals.push(c);
+// 		}
+// 	}
+
+// 	// find locations for all of these goals
+// 	while (goals.length > 0) {
+// 		var gid = Math.floor(Math.random() * goals.length);
+// 		var row = Math.floor(Math.random()*25);
+// 		var col = Math.floor(Math.random()*25);
+// 		if (BOARD[row][col] === 0 && row !== 12 && col !== 12 && row !== 0 && col !== 0) {
+// 			BOARD[row][col] = goals[gid];
+// 			goals.splice(gid, 1);
+// 		}
+// 	}
+
+// }
 
 defineGoals(colors);
 console.log('board', BOARD);
@@ -269,11 +294,18 @@ function checkIfGoal (row, col) {
 		// update the score
 		BOARD[row][col] = 0;
 		var color = colors[board_value];
+		$('#tiles_collected').append(
+			"<svg width='20' height='20' style='padding:3px;'>" +
+			"<rect width='20' height='20' style='fill:" + color +
+			"' class='" + color + "' />" +
+			"</svg>"
+		);
 		var loc = $('#' + color + '_num');
 		loc.text(parseInt(loc.text(), 10) + 1);
 
 		// log the goal_order
 		goal_order.push(board_value);
+		goal_unused.push(board_value);
 
 		actions_categories[board_value] += 1;
 	}
@@ -283,50 +315,27 @@ function checkIfGoal (row, col) {
 
 }
 
+function checkIfInArray( sequence, seq ) {
+
+	// var s_check = Array.apply(null, new Array(s.length)).map(Number.prototype.valueOf, 0);
+	var s = 0;
+	for (var i = 0; i < sequence.length; i++) {
+		if (sequence[i] == seq[s]) {
+			s++;
+		}
+	}
+	return (s == seq.length);
+
+}
+
 function checkPatterns() {
 
 	var pattern_nums = [];
-	// var tiles = [];
-	// var pattern_num = null;
 
-	// var colors = ['none', LINECOLOR, 'red', 'yellow', 'green', 'blue']
-
-	// one of each
-	if (actions_categories[2] > 0 
-		&& actions_categories[3] > 0 
-		&& actions_categories[4] > 0 
-		&& actions_categories[5] > 0) {
-		// pattern = PATTERN_A;
-		// tiles = ;
-		pattern_nums.push(0); 
-	}
-
-	// 4 of 2
-	if (actions_categories[2] > 3) {
-		// pattern = PATTERN_B;
-		// tiles = ;
-		pattern_nums.push(1);
-	}
-
-	if (actions_categories[2] > 1 
-		&& actions_categories[3] > 1) {
-		// pattern = PATTERN_C;
-		// tiles = ;
-		pattern_nums.push(2);
-	}
-
-	if (actions_categories[4] > 1
-		&& actions_categories[5] > 1) {
-		// pattern = PATTERN_D;
-		// tiles = ;
-		pattern_nums.push(3); 
-	}
-
-	if (actions_categories[5] > 1
-		&& actions_categories[2] > 1) {
-		// pattern = PATTERN_E;
-		// tiles = ;
-		pattern_nums.push(4);
+	for (var i = 0; i < pattern_tiles.length; i++) {
+		if (checkIfInArray(goal_unused, pattern_tiles[i])) {
+			pattern_nums.push(i);
+		}
 	}
 	
 
@@ -334,13 +343,13 @@ function checkPatterns() {
 
 		var pattern_num = pattern_nums[p];
 
-		if (!(pattern_order.indexOf(pattern_num) > -1)
-		&& !(pattern_appear.indexOf(pattern_num) > -1)) {
+		if ((pattern_order.indexOf(pattern_num) < 0) &&
+			(pattern_appear.indexOf(pattern_num) < 0)) {
 
 			// show use pattern button
 			$('#' + patterns[pattern_num]).append(
-				"<button class='pattern-button' onclick='usePattern("
-				+ pattern_num +")' id='"+ pattern_num +"'>use</button>"
+				"<button class='pattern-button' onclick='usePattern("+
+					pattern_num +")'>use</button>"
 			);
 
 			pattern_appear.push(pattern_num);
@@ -359,7 +368,6 @@ function usePattern (pattern_num) {
 	pattern_order.push(pattern_num);
 	
 	// color in the pattern used
-	$('#' + pattern_num).remove();
 	$('#' + patterns[pattern_num]).append('<b>X</b>');
 
 	// fix blocks in patterns
@@ -373,11 +381,15 @@ function usePattern (pattern_num) {
 		var color = colors[tiles[j]];
 
 		// display
-		var loc = $('#' + color + '_num');
-		loc.text(parseInt(loc.text(), 10) - 1);
+		var block = $('.' + color)[0];
+		block.style.fill = LINECOLOR;
+		block = jQuery(block);
+		block.attr('class', 'grey');
 
 		// stored value
 		actions_categories[tiles[j]] -= 1;
+
+		goal_unused.splice(goal_unused.indexOf(tiles[j]), 1);
 	}
 
 	// remove all "use" buttons

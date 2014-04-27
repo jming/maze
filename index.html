@@ -54,21 +54,11 @@
         <canvas id="canvas" width="500px" height="500px" style="margin:20px;"></canvas>
 
         <div id='score'>
-          <table cellpadding='10'>
-            <tr>
-              <td></td>
-              <td><svg width='20' height='20'><rect width='20' height='20' style='fill:red' /></svg></td>
-              <td id='red_num'>0</td>
-              <td><svg width='20' height='20'><rect width='20' height='20' style='fill:yellow' /></svg></td>
-              <td id='yellow_num'>0</td>
-              <td><svg width='20' height='20'><rect width='20' height='20' style='fill:green' /></svg></td>
-              <td id='green_num'>0</td>
-              <td><svg width='20' height='20'><rect width='20' height='20' style='fill:blue' /></svg></td>
-              <td id='blue_num'>0</td>
-              <td>Steps left:</td>
-              <td id='num_steps'>150</td>
-            </tr>
-          </table>
+
+          <p>Steps left: <b><span id='num_steps' style='padding-left:50px;'>250</span></b></p>
+          <p>Tiles collected: </p>
+          <p id='tiles_collected'></p>
+
         </div>
 
       </td>
@@ -79,11 +69,11 @@
 
           <h2>Welcome to the exploratory maze game!</h2>
 
-          <p>Your goal is to reach the middle of the maze in <b>the least number of steps possible</b>. You can move using the left, right, down, and up arrow keys.</p>
+          <p>Your goal is to reach the middle of the maze in <b>the least number of steps possible</b>, under 250 steps. You can move using the left, right, up, and down arrow keys.</p>
 
-          <p>There is a wall around the middle of the maze. Once you collected enough tiles <br>(<b>in any order</b>) to match one of the sets below, you will have the opportunity to use this combination to break down a different section of the wall.</p>
+          <p>There is a wall around the middle of the maze. Once you collected enough tiles <br>(<b>in the given order</b>) to match one of the sets below, you will have the opportunity to use this combination to break down a different section of the wall.</p>
 
-          <p class='expert'>The labels for the combinations correspond with the labels on the wall. When you attain the set, you will be able to break down all of the blocks with the label.</p>
+          <p class='expert'>The labels for the combinations correspond with the labels on the wall. When you attain the set, you will be able to break down <b>all</b> of the blocks with the label.</p>
 
           <p id='pattern_a'>
             <span class='expert'><b>A </b></span>
